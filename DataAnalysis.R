@@ -42,18 +42,89 @@ ggplot(data[data$TCapital_Insurred<1e6,]) + geom_density(aes(x = TCapital_Insurr
 
 ggplot(data %>% group_by(builtYear) %>% summarise(Freq = sum(TClaimsNo)/sum(TExposure),
                                                   Expsoure = sum(TExposure))) +
-  geom_bar(aes(x = builtYear, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 0.8, fill = "#116E8A")+ 
+  geom_bar(aes(x = builtYear, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 0.5, fill = "#116E8A")+ 
   geom_point(aes(x = builtYear,y = Freq))+theme_bw()
 
 
+# Freq per nrOfFloors - what is 0 number of floors?
 
-ggplot(data[data$Avg_Cost>0,]) + geom_boxplot(aes(x = as.character(TClaimsNo), y = TCapital_Insurred)) + theme_bw()
+ggplot(data %>% group_by(nrOfFloors) %>% summarise(Freq = sum(TClaimsNo)/sum(TExposure),
+                                                  Expsoure = sum(TExposure))) +
+  geom_bar(aes(x = nrOfFloors, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 0.5, fill = "#116E8A")+ 
+  geom_point(aes(x = nrOfFloors,y = Freq))+theme_bw()
+
+# Freq per  postalCode - How to aggregate?
+length(unique(data$postalCode))
+ggplot(data %>% group_by(postalCode) %>% summarise(Freq = sum(TClaimsNo)/sum(TExposure),
+                                                   Expsoure = sum(TExposure))) +
+  geom_bar(aes(x = postalCode, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 1, fill = "#116E8A")+ 
+  geom_point(aes(x = postalCode,y = Freq))+theme_bw()
+
+
+# Freq per  floodvulnerability
+ggplot(data %>% group_by(floodvulnerability) %>% summarise(Freq = sum(TClaimsNo)/sum(TExposure),
+                                                   Expsoure = sum(TExposure))) +
+  geom_bar(aes(x = floodvulnerability, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 1, fill = "#116E8A")+ 
+  geom_point(aes(x = floodvulnerability,y = Freq))+theme_bw()
+
+
+ggplot(data %>% group_by(floodvulnerability, Pcause) %>% summarise(Freq = sum(TClaimsNo)/sum(TExposure),
+                                                           Expsoure = sum(TExposure))) +
+  geom_bar(aes(x = floodvulnerability, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 1, fill = "#116E8A")+ 
+  geom_point(aes(x = floodvulnerability,y = Freq, color = Pcause))+theme_bw()
+
+
+# Freq per  windvulnerability
+ggplot(data %>% group_by(windvulnerability) %>% summarise(Freq = sum(TClaimsNo)/sum(TExposure),
+                                                           Expsoure = sum(TExposure))) +
+  geom_bar(aes(x = windvulnerability, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 1, fill = "#116E8A")+ 
+  geom_point(aes(x = windvulnerability,y = Freq))+theme_bw()
+
+
+ggplot(data %>% group_by(windvulnerability, Pcause) %>% summarise(Freq = sum(TClaimsNo)/sum(TExposure),
+                                                                   Expsoure = sum(TExposure))) +
+  geom_bar(aes(x = windvulnerability, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 1, fill = "#116E8A")+ 
+  geom_point(aes(x = windvulnerability,y = Freq, color = Pcause))+theme_bw()
+
+# Freq per  Location
+ggplot(data %>% group_by(Location) %>% summarise(Freq = sum(TClaimsNo)/sum(TExposure),
+                                                          Expsoure = sum(TExposure))) +
+  geom_bar(aes(x = Location, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 1, fill = "#116E8A")+ 
+  geom_point(aes(x = Location,y = Freq))+theme_bw()
+
+# Freq per  Item_Type_Description
+ggplot(data %>% group_by(Item_Type_Description) %>% summarise(Freq = sum(TClaimsNo)/sum(TExposure),
+                                                 Expsoure = sum(TExposure))) +
+  geom_bar(aes(x = Item_Type_Description, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 1, fill = "#116E8A")+ 
+  geom_point(aes(x = Item_Type_Description,y = Freq))+theme_bw()
+
+# Freq per  SubItemType_C
+ggplot(data %>% group_by(SubItemType_C) %>% summarise(Freq = sum(TClaimsNo)/sum(TExposure),
+                                                              Expsoure = sum(TExposure))) +
+  geom_bar(aes(x = SubItemType_C, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 1, fill = "#116E8A")+ 
+  geom_point(aes(x = SubItemType_C,y = Freq))+theme_bw()
+
+# Freq per  Construction_Material_C
+ggplot(data %>% group_by(Construction_Material_C) %>% summarise(Freq = sum(TClaimsNo)/sum(TExposure),
+                                                      Expsoure = sum(TExposure))) +
+  geom_bar(aes(x = Construction_Material_C, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 1, fill = "#116E8A")+ 
+  geom_point(aes(x = Construction_Material_C,y = Freq))+theme_bw()
+
+# Freq per  FloorsType_C
+ggplot(data %>% group_by(FloorsType_C) %>% summarise(Freq = sum(TClaimsNo)/sum(TExposure),
+                                                                Expsoure = sum(TExposure))) +
+  geom_bar(aes(x = FloorsType_C, y = 0.05*Expsoure/max(Expsoure)), stat = 'identity', alpha = 1, fill = "#116E8A")+ 
+  geom_point(aes(x = FloorsType_C,y = Freq))+theme_bw()
+
+
+# Tcapital insurred
+plot(data[data$Avg_Cost>0,]) + geom_boxplot(aes(x = as.character(TClaimsNo), y = TCapital_Insurred)) + theme_bw()
 
 # 
 
 data_aggregated <- data %>% group_by(postalCode, builtYear, nrOfFloors, floodvulnerability,
-                                     windvulnerability, Location, Item_Type_Description, Location,
-                                     Pcause, SubItemType_C, Construction_Material_C, Item_Type_C, FloorsType_C) %>% 
+                                     windvulnerability, Location, Item_Type_Description,
+                                     Pcause, SubItemType_C, Construction_Material_C, FloorsType_C) %>% 
   summarise(TExposure = sum(TExposure),
             TPremiums = sum(TPremiums), 
             TClaimsNo = sum(TClaimsNo),
